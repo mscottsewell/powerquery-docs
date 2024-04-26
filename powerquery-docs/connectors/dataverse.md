@@ -169,13 +169,13 @@ in
 
 Misspelling a column name might result in an error message about query folding instead of missing column.
 
-### Accessing large semantic models
+### Creating large semantic models
 
-Power BI semantic models contained in Dataverse can be very large. If you're using the Power Query Dataverse connector, any specific query must complete within 5 minutes else it will time-out. So you might need to query the data multiple times to access all of the data in the model. Using multiple queries can take a considerable amount of time to return all the data.
+Unconstrained, default queries of Dataverse data can be very large and complex. If you are using the Power Query Dataverse connector, any specific query must complete within 5 minutes else it will time-out. The best practice is to always ensure the query includes only the minimum columns and rows needed and is structured [in a native query](/power-bi/guidance/powerbi-modeling-guidance-for-power-platform#execute-native-queries-with-the-enablefolding-option) to “Fold” back to the server to ensure best performance.
 
-If you're using the [Common Data Service (Legacy)](common-data-service-legacy.md) connector, you can use a single query to access all of the data in the semantic model. This connector works differently and returns the result in "pages" of 5-K records. Although the Common Data Service (Legacy) connector is more efficient in returning large amounts of data, it can still take a significant amount of time to return the result.
+The [Common Data Service (Legacy)](common-data-service-legacy.md) connector, returns the result in "pages" of 5,000 records at a time. Although this in some cases allows for larger query results, it is significantly slower than the Dataverse connector.
 
-Instead of using these connectors to access large semantic models, we recommend that you use [Azure Synapse Link](/powerapps/maker/data-platform/export-to-data-lake) to access large models. Using Azure Synapse Link is even more efficient than either the Power Query Dataverse or Common Data Service (Legacy) connectors, and is specifically designed around data integration scenarios.
+For greater scalability and flexibility with Dataverse data, we recommend the use of the [Dataverse to Fabric Link](/power-apps/maker/data-platform/azure-synapse-link-view-in-fabric) as the data source for large semantic models. Using Fabric Link (or [Azure Synapse Link](/power-apps/maker/data-platform/azure-synapse-link-delta-lake)) is far more efficient and capable than either the Power Query Dataverse or Common Data Service (Legacy) connectors, and easily supports even the largest scenarios.
 
 ### Performance issues related to relationship columns
 
